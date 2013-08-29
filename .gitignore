@@ -38,6 +38,7 @@ nosetests.xml
 twit/auth/
 twit/twitter_login.py
 .gitignore~
+auth/
 
 
 db
