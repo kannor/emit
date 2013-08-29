@@ -43,6 +43,6 @@ twit/twitter_login.py
 db
 
 #db
-.db
+*.db
 
 
