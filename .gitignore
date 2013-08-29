@@ -35,6 +35,9 @@ nosetests.xml
 .pydevproject
 
 #dir
+twit/auth/
+twit/twitter_login.py
+.gitignore~
 
 
 db
