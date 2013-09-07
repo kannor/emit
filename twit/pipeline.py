@@ -78,6 +78,7 @@ def update_db(users, texts):
 
 
 
+
 # def update_db(users, texts):
 # 	schools = Schools.objects.all()
 # 	schools_names = [school.name for school in schools]
