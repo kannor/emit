@@ -44,11 +44,14 @@ def pipeline():
 		data = twitter.get_data()
 		users = twitter.get_users()
 		texts = twitter.get_text()
-
-		update_db(users, texts)
-		print 'waiting for %s seconds' % twitter.next_conn_time
-		time.sleep(twitter.next_conn_time)
-		print 'go to twitter with id: %s' % twitter.max_key
+		if twitter.is_same_key():
+			time.sleep(twitter.next_conn_time)
+			continue
+		else:
+			update_db(users, texts)
+			print 'waiting for %s seconds' % twitter.next_conn_time
+			time.sleep(twitter.next_conn_time)
+			print 'go to twitter with id: %s' % twitter.max_key
 
 
 def update_db(users, texts):
