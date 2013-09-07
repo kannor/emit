@@ -10,7 +10,7 @@ class TwitterAnalyser:
 		self.data = {}
 
 	def get_data(self):
-		self.data = self.client.search.tweets(q = 'man', max_key = self.max_key)
+		self.data = self.client.search.tweets(q = 'a', max_key = self.max_key)
 		self.max_key = self.data.get('search_metadata', None).get('max_id', None)
 		return self.data
 

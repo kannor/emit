@@ -7,4 +7,7 @@ urlpatterns = patterns('',
 
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'emitta.views.main'),
+    url(r'^emitta/', include('emitta.urls')),
+    url(r'^get/(?P<access_key>.*?)/', 'twit.views.get_tweets'),
 )
