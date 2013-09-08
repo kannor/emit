@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<!-- 		<meta http-equiv="refresh" content="10" > -->
+		<title>
+			Secure Section... Please get out
+		</title>
+		<style type="text/css">
+		div{
+			margin-left: auto;
+			margin-right: auto;
+			width: 400px;
+			height: 150px;
+		}
+		h1{
+			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			margin-left: 47px;
+			margin-top: 50px;
+			color: #00D8CC;
+
+		}
+		p{
+			display: inline-block;
+			margin: 0;
+			margin-left: 7px;
+		}
+		</style>
+	</head>
+	<body>
+
+		
+		<div>
+			<h1>I will update db in<p id="ref8u3huhj"></p></h1>
+		</div>
+		<script type="text/javascript">
+		var out=document.getElementById('ref8u3huhj');
+		var h1 = document.getElementsByTagName('h1')[0];
+		var count=11;
+
+		var timer = function(){
+			if (count > 0)
+				out.innerText=count-=1
+			else
+				h1.innerText = "Updating now ...."
+		}
+		setInterval(timer, 1000)
+
+		</script>
+	</body>
+</html>

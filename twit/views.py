@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response as render
 from django.http import HttpResponse , HttpResponseRedirect
 from django.contrib.sites.models import Site
 
@@ -7,9 +7,9 @@ from twit.analyser import TwitterAnalyser
 
 def get_tweets(request, access_key):
 	if access_key == 'w398734jhje32kncy36ghsv':
-		twitter, data, users, texts  = TwitterAnalyser(), twitter.get_data(), twitter.get_users(), twitter.get_text()
-		update_db(users, texts)
-		return HttpResponse('Ok')
+		#twitter, data, users, texts  = TwitterAnalyser(), twitter.get_data(), twitter.get_users(), twitter.get_text()
+		#update_db(users, texts)
+		return render('twit/base.html', dict())
 	return HttpResponseRedirect('/')
 
 def update_db(users, texts):
@@ -33,8 +33,6 @@ def update_db(users, texts):
 			user = tweets.get(user = user)
 			user.no_tweets += 1
 			user.save()
-
-		else:
 			user = Tweets.objects.create(text = texts[i].encode('utf-8'), user = user[i], no_tweets = 1)
 
 			
