@@ -19,22 +19,29 @@ def update_db(users, texts):
 	schools_names = [school.name for school in schools]
 	all_users = [tweet.user for tweet in tweets]
 	for i in range(len(texts)):
-		school_name  = texts[i].encode('utf-8').split()[1]
+		try:
+			school_name = texts[i].encode('utf-8').split()[1]
+		except:
+			school_name = texts[i].encode('utf-8')
 		user =  users[i]
 
 		if school_name in schools_names:
-			school = schools.get(name = school_name)
+			school = schools.get(name=school_name)
 			school.rank +=1
 			school.save()
 
 		else:
 			school = Schools.objects.create(name=school_name, rank=1)
 
-		# if user in all_users:
-		# 	user = tweets.get(user = user)
-		# 	user.no_tweets += 1
-		# 	user.save()
-		# 	user = Tweets.objects.create(text = texts[i].encode('utf-8'), user = user[i], no_tweets = 1)
+		if user in all_users:
+			user = tweets.get(user = user)
+			user.no_tweets += 1
+			user.save()
+
+		else:
+			user = Tweets.objects.create(text = texts[i].encode('utf-8'), user = users[i], no_tweets = 1)
+
+
 
 			
 
