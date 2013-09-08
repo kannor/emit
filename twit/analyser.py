@@ -32,7 +32,7 @@ class TwitterAnalyser:
 			return
 		self.next_conn_time = 10
 
-	def pause_pipeline(self):zx
+	def pause_pipeline(self):
 		if self.is_same_key():
 			self.next_conn_time *= 100
 			return
