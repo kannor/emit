@@ -32,8 +32,12 @@ data = cursor.execute('select * from schools').fetchall()
 def update_rank(schools, name):
 	for sch in schools:
 		if sch[1] == name:
-			# print 'thgfjghierotfpoeporpoi', sch[2] + 1 
 			return sch[2] + 1
+
+def update_no_tweets(tweets, user):
+	for tweet in tweets:
+		if tweet[2] == user:
+			return tweet[3] +  1
 
 def pipeline():
 
@@ -51,33 +55,51 @@ def pipeline():
 			update_db(users, texts)
 			print 'waiting for %s seconds' % twitter.next_conn_time
 			time.sleep(twitter.next_conn_time)
-			print 'go to twitter with id: %s' % twitter.max_key
+			print 'going to twitter with id: %s' % twitter.max_key
 
 
 def update_db(users, texts):
 	schools = cursor.execute('select * from schools').fetchall()
-	print schools
-	school_names = [school[1] for school in schools]
-	print school_names
+	tweets = cursor.execute('select * from tweets').fetchall()
+
+	
+	all_users = [tweets[2] for tweet in tweets]
+	school_names = [school[1].encode('utf-8') for school in schools]
 	for i in range(len(texts)):
 		try:
 			school_name = texts[i].encode('utf-8').split()[1]
 		except:
 			school_name = texts[i].encode('utf-8')
-		print 'school   ' + school_name + '   the'
+
 		if school_name in school_names:
 			print school_name
-			update_st = "update schools set rank='%d' where name='%s'" % (update_rank(schools, school_name), school_name)
-			cursor.execute(update_st)
-			conn.commit()
-
+			update_st = "update schools set rank='%s' where name='%s'" % (update_rank(schools, school_name), school_name)
+			
+			try: 
+				cursor.execute(update_st)
+				conn.commit()
+			except sqlite3.OperationalError:
+				pass
 		else:
 			try:
-				insert_st = "insert into schools ('name','rank') values ('%s','%d')" %(school_name, 1)
+				insert_st = "insert into schools ('name','rank') values ('%s','%s')" %(school_name, 1)
 				cursor.execute(insert_st)
 				conn.commit()
 			except sqlite3.OperationalError:
 				print 'OP ErrOR'
+
+		user =  users[i]
+		if user in all_users:
+			update_st = "update tweets set no_tweets='%s' where user='%s'" % (update_no_tweets(tweets, user), user)
+			cursor.execute(update_st)
+			conn.commit()
+		else:
+			#text = texts[i].encode('utf-8')
+			insert_st = """insert into tweets ('text','user', 'no_tweets') values ('%s','%s', '%s')""" %('some tweet', user, 1)
+			cursor.execute(insert_st)
+			conn.commit()
+
+
 
 
 
